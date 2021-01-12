@@ -15,20 +15,17 @@ jobs:
         KS_TOKEN: ${{ secrets.KS_TOKEN }}
     steps:
       - name: Checkout
-        run: |
-          git clone https://github.com/Sunert/Scripts.git ~/Scripts
+        uses: actions/checkout@v2
       - name: Use Node.js 12.x
         uses: actions/setup-node@v1
         with:
           node-version: 12.x
       - name: npm install
         run: |
-          cd ~/Scripts
           npm install
       - name: 运行 【快手视频签到】
         if: env.KS_TOKEN
         run: |
-          cd ~/Scripts
           node Task/kuaishou.js
         env:
           PUSH_KEY: ${{ secrets.PUSH_KEY || github.event.client_payload.PUSH_KEY }}
